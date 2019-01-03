@@ -8,7 +8,7 @@ export default class Booklist extends Component {
 
     this.state = {
       books: [
-        // { id: 0, title: 'A', author: 'Author 1', pages: '300', inCart: false },
+        { id: 0, title: 'A', author: 'Author 1', pages: '300', inCart: false },
       ]
     }
   }
@@ -16,10 +16,6 @@ export default class Booklist extends Component {
   componentDidMount() {
     this.getBooks()
   }
-
-  // componentWillUpdate() {
-  //   this.addCart()
-  // }
 
   compare = (key) => (a, b) => a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0
   sortable = (e) => {
@@ -47,6 +43,19 @@ export default class Booklist extends Component {
   addCart = async (id) => {
     try {
       const url = `http://localhost:8082/api/books/cart/add/${id}`
+      const response = await axios.patch(url)
+      this.getBooks()
+      this.props.addBook(response.data)
+      console.log(response.data)
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+  removeCart = async (id) => {
+    try {
+      const url = `http://localhost:8082/api/books/cart/remove/${id}`
       await axios.patch(url)
       this.getBooks()
     } catch (err) {
@@ -70,6 +79,7 @@ export default class Booklist extends Component {
                 key={book.id}
                 {...book}
                 addCart={() => this.addCart(book.id)}
+                removeCart={() => this.removeCart(book.id)}
               />
             )
           }

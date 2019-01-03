@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header = ({ quantity }) => {
+const Header = (props) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -16,7 +16,9 @@ const Header = ({ quantity }) => {
             <button type="submit" className="btn btn-primary my-2 my-sm-0">Search</button>
           </form>
           <a href="/" className="cart btn btn-success ml-lg-3 mb-lg-0 mb-2">
-            Cart Total: <span className="total">${0}</span>
+            Cart Total: <span className="total">
+              ${props.cartItems.reduce((val, acc) => val + acc.price, 0)}
+            </span>
           </a>
         </div>
         </div>
