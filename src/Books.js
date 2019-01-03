@@ -10,13 +10,13 @@ export default class Books extends Component {
     }
   }
 
-  addBook = (book) => {
+  addCart = (book) => {
     this.setState({
       cartItems: [...this.state.cartItems, book]
     })
   }
 
-  removeBook = (book) => {
+  removeCart = (book) => {
     let books = this.state.cartItems.filter(b => b.id !== book.id)
     this.setState({
       cartItems: [...books]
@@ -31,7 +31,7 @@ export default class Books extends Component {
         </header>
 
         <div className="container">
-          <Booklist addBook={this.addBook} removeBook={this.removeBook}/>
+          <Booklist addCart={this.addCart} removeCart={this.removeCart} />
         </div>
 
         <footer className="app-footer"></footer>

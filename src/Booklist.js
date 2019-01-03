@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import Book from './Book'
 import SortButton from './SortButton'
 import Search from './Search'
+import AddBook from './AddBook'
 import axios from 'axios'
+const url = 'http://localhost:8082/api/books'
 
 export default class Booklist extends Component {
   constructor(props) {
@@ -33,9 +35,7 @@ export default class Booklist extends Component {
 
   getBooks = async () => {
     try {
-      const url = 'http://localhost:8082/api/books'
       const response = await axios.get(url)
-
       this.setState({
         books: response.data,
         keys: ['author', 'publisher', 'title']
@@ -46,8 +46,20 @@ export default class Booklist extends Component {
     }
   }
 
+  bookLength = (i) => this.state.books.length + i
+
+  addOne = async (book) => {
+    try {
+      await axios.post(url, book)
+      this.getBooks()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   onChange = (e) => {
     if (!e.target.value) this.getBooks()
+
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -56,7 +68,6 @@ export default class Booklist extends Component {
   onSearch = async (e) => {
     e.preventDefault()
     try {
-      const url = 'http://localhost:8082/api/books'
       const response = await axios.get(url)
       const data = await response.data
         .filter(book => book.title === this.state.search || book.author === this.state.search || book.publisher === this.state.search)
@@ -75,7 +86,7 @@ export default class Booklist extends Component {
       const url = `http://localhost:8082/api/books/cart/add/${id}`
       const response = await axios.patch(url)
       this.getBooks()
-      this.props.addBook(response.data)
+      this.props.addCart(response.data)
     } catch (err) {
       console.log(err)
     }
@@ -86,7 +97,7 @@ export default class Booklist extends Component {
       const url = `http://localhost:8082/api/books/cart/remove/${id}`
       const response = await axios.patch(url)
       this.getBooks()
-      this.props.removeBook(response.data)
+      this.props.removeCart(response.data)
     } catch (err) {
       console.log(err)
     }
@@ -96,11 +107,11 @@ export default class Booklist extends Component {
     return (
       <div className="mt-4 mb-4 row">
         <Search onSearch={this.onSearch} onChange={this.onChange}/>
-        <span className="sort-widget col-lg-4 text-right p-0">
+        <span className="sort-widget text-right col-lg-4">
           Sort by:&nbsp;{this.state.keys.map(ele => <SortButton onClick={this.sortable} sortBy={ele} key={ele} />)}
         </span>
 
-        <ul className="mt-3 list-group">
+        <ul className="col-lg-8 mt-3 pl-0 list-group">
           {
             this.state.books.map(book =>
               <Book
@@ -112,6 +123,11 @@ export default class Booklist extends Component {
             )
           }
         </ul>
+
+        <div className="addBook col-lg-4 pr-0">
+          <AddBook addOne={this.addOne} bookLength={this.bookLength}/>
+        </div>
+
       </div>
     )
   }
