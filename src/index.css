@@ -16,3 +16,7 @@ code {
 input.sort {
   text-transform: capitalize;
 }
+
+.form-inline .form-control {
+  width: 50%;
+}
