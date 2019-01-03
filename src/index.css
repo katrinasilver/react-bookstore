@@ -13,7 +13,6 @@ code {
     monospace;
 }
 
-input.author,
-input.title {
+input.sort {
   text-transform: capitalize;
 }

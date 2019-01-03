@@ -3,13 +3,6 @@ import Header from './Header'
 import Booklist from './Booklist'
 
 export default class Books extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      cartItems: []
-    }
-  }
 
   render() {
     return (

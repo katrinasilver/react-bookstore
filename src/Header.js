@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header = () => {
+const Header = ({ quantity }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -15,8 +15,8 @@ const Header = () => {
             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
             <button type="submit" className="btn btn-primary my-2 my-sm-0">Search</button>
           </form>
-          <a href="/" className="btn btn-success ml-lg-3 mb-lg-0 mb-2">
-            Cart Items: <span className="qty">0</span>
+          <a href="/" className="cart btn btn-success ml-lg-3 mb-lg-0 mb-2">
+            Cart Total: <span className="total">${0}</span>
           </a>
         </div>
         </div>
