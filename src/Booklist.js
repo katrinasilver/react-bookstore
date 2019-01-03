@@ -47,17 +47,20 @@ export default class Booklist extends Component {
       this.getBooks()
       this.props.addBook(response.data)
       console.log(response.data)
+
     } catch (err) {
       console.log(err)
     }
-
   }
 
   removeCart = async (id) => {
     try {
       const url = `http://localhost:8082/api/books/cart/remove/${id}`
-      await axios.patch(url)
+      const response = await axios.patch(url)
       this.getBooks()
+      this.props.removeBook(response.data)
+      console.log(response.data)
+
     } catch (err) {
       console.log(err)
     }
