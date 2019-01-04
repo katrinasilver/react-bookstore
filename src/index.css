@@ -13,6 +13,32 @@ code {
     monospace;
 }
 
+header {
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.app {
+  margin-top: 5rem;
+}
+
+form.addBook {
+  position: fixed;
+  width: 300px;
+}
+
+form label {
+  display: block;
+  text-transform: capitalize;
+}
+
 input.sort {
   text-transform: capitalize;
+}
+
+.form-inline .form-control {
+  width: 70%;
 }

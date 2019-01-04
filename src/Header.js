@@ -1,17 +1,14 @@
 import React from 'react'
+import { MdShoppingCart } from 'react-icons/md'
 
-const Header = ({search, cartItems, onSearch, onChange}) => {
+const Header = ({ cartItems }) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container p-0">
         <a href="/" className="navbar-brand">Roger's Personal Bargain Books</a>
-        <div className="navbar-collapse">
-          <form className="navbar-nav mr-auto" onSubmit={onSearch}>
-            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" value={search} onChange={onChange}/>
-            <button type="submit" className="btn btn-primary my-2 my-sm-0">Search</button>
-          </form>
-          <a href="/" className="cart btn btn-success ml-lg-3 mb-lg-0 mb-2">
-            Cart Total:
+        <div className="cart-container">
+          <a href="/" className="cart btn btn-primary ml-lg-3 mb-lg-0 mb-2">
+            <MdShoppingCart />
             <span className="total">
               ${ cartItems.reduce((val, acc) => val + acc.price, 0).toFixed(2) }
             </span>
