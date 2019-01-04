@@ -50,7 +50,7 @@ export default class AddBook extends Component {
       description: ''
     })
 
-    this.props.addOne(book)
+    this.props.addBook(book)
   }
 
   render() {

@@ -15,7 +15,8 @@ export default class Booklist extends Component {
         { id: 0, title: 'A', author: 'Author 1', pages: '300', inCart: false },
       ],
       keys: [],
-      search: ''
+      search: '',
+      editing: false
     }
   }
 
@@ -23,13 +24,23 @@ export default class Booklist extends Component {
     this.getBooks()
   }
 
+  bookLength = (i) => this.state.books.length + i
+
   compare = (key) => (a, b) => a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0
+
   sortable = (e) => {
     let sort = e.target.value
     let array = [...this.state.books]
     array.sort(this.compare(sort))
     this.setState({
       books: array
+    })
+  }
+
+  onChange = (e) => {
+    if (!e.target.value) this.getBooks()
+    this.setState({
+      [e.target.name]: e.target.value
     })
   }
 
@@ -46,9 +57,7 @@ export default class Booklist extends Component {
     }
   }
 
-  bookLength = (i) => this.state.books.length + i
-
-  addOne = async (book) => {
+  addBook = async (book) => {
     try {
       await axios.post(url, book)
       this.getBooks()
@@ -57,12 +66,15 @@ export default class Booklist extends Component {
     }
   }
 
-  onChange = (e) => {
-    if (!e.target.value) this.getBooks()
-
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+  removeBook = async (id) => {
+    try {
+      const url = `http://localhost:8082/api/books/${id}`
+      const response = await axios.delete(url)
+      this.getBooks()
+      this.props.removeCart(response.data)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   onSearch = async (e) => {
@@ -119,13 +131,14 @@ export default class Booklist extends Component {
                 {...book}
                 addCart={() => this.addCart(book.id)}
                 removeCart={() => this.removeCart(book.id)}
+                removeBook={() => this.removeBook(book.id)}
               />
             )
           }
         </ul>
 
         <div className="addBook col-lg-4 pr-0">
-          <AddBook addOne={this.addOne} bookLength={this.bookLength}/>
+          <AddBook addBook={this.addBook} bookLength={this.bookLength}/>
         </div>
 
       </div>
