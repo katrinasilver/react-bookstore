@@ -31,10 +31,8 @@ export default class Booklist extends Component {
 
   sortable = (e) => {
     let sort = e.target.value
-    let array = [...this.state.books]
-    array.sort(this.compare(sort))
     this.setState({
-      books: array
+      books: [...this.state.books].sort(this.compare(sort))
     })
   }
 
@@ -43,6 +41,23 @@ export default class Booklist extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  editMode = (id) => {
+    let editing = this.state.books.filter(book => book.id === id)
+    this.setState({
+      books: [...editing],
+      editing: true
+    })
+  }
+
+  addBook = async (book) => {
+    try {
+      await axios.post(url, book)
+      this.getBooks()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   getBooks = async () => {
@@ -58,34 +73,6 @@ export default class Booklist extends Component {
     }
   }
 
-  addBook = async (book) => {
-    try {
-      await axios.post(url, book)
-      this.getBooks()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  removeBook = async (id) => {
-    try {
-      const url = `http://localhost:8082/api/books/${id}`
-      const response = await axios.delete(url)
-      this.getBooks()
-      this.props.removeCart(response.data)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  editMode = (id) => {
-    let editing = this.state.books.filter(book => book.id === id)
-    this.setState({
-      books: [...editing],
-      editing: true
-    })
-  }
-
   editBook = async (id, book) => {
     try {
       await axios.put(`${url}/${id}`, book)
@@ -98,17 +85,26 @@ export default class Booklist extends Component {
     }
   }
 
+  removeBook = async (id) => {
+    try {
+      const url = `http://localhost:8082/api/books/${id}`
+      const response = await axios.delete(url)
+      this.props.removeCart(response.data)
+      this.getBooks()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   onSearch = async (e) => {
     e.preventDefault()
     try {
       const response = await axios.get(url)
       const data = await response.data
         .filter(book => book.title === this.state.search || book.author === this.state.search || book.publisher === this.state.search)
-
       this.setState({
         books: data
       })
-
     } catch (err) {
       console.log(err)
     }
@@ -118,8 +114,8 @@ export default class Booklist extends Component {
     try {
       const url = `http://localhost:8082/api/books/cart/add/${id}`
       const response = await axios.patch(url)
-      this.getBooks()
       this.props.addCart(response.data)
+      this.getBooks()
     } catch (err) {
       console.log(err)
     }
