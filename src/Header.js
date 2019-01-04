@@ -5,7 +5,7 @@ const Header = ({ cartItems }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container p-0">
-        <a href="/" className="navbar-brand">Roger's Personal Bargain Books</a>
+        <a href="/" className="navbar-brand">Bargain Bin Bookstore</a>
         <div className="cart-container">
           <a href="/" className="cart btn btn-primary ml-lg-3 mb-lg-0 mb-2">
             <MdShoppingCart />

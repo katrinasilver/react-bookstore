@@ -5,7 +5,7 @@ import SortButton from './SortButton'
 import Search from './Search'
 import AddBook from './AddBook'
 import axios from 'axios'
-const url = 'http://localhost:8082/api/books'
+const url = process.env.REACT_APP_BASE_URL
 
 export default class Booklist extends Component {
   constructor(props) {
