@@ -99,7 +99,11 @@ export default class Booklist extends Component {
     e.preventDefault()
     try {
       const response = await axios.get(url)
-      const data = await response.data.filter(book => Object.values(book).includes(this.state.search))
+      const data = await response.data.filter(book =>
+        Object.values(book).reduce((i, b) => i || (typeof b === 'string' ?
+          b.toLowerCase().includes(this.state.search.toLowerCase()) : false), false)
+      )
+      console.log(data)
       this.setState({
         books: data
       })
