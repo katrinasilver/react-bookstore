@@ -100,8 +100,7 @@ export default class Booklist extends Component {
     e.preventDefault()
     try {
       const response = await axios.get(url)
-      const data = await response.data
-        .filter(book => book.title === this.state.search || book.author === this.state.search || book.publisher === this.state.search)
+      const data = await response.data.filter(book => Object.values(book).includes(this.state.search))
       this.setState({
         books: data
       })
