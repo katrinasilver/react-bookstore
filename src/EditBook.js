@@ -9,6 +9,7 @@ export default class EditBook extends Component {
       title: this.props.title,
       author: this.props.author,
       publisher: this.props.publisher,
+      website: this.props.website,
       pages: this.props.pages,
       description: this.props.description
     }
@@ -27,6 +28,7 @@ export default class EditBook extends Component {
       title: this.state.title,
       author: this.state.author,
       publisher: this.state.publisher,
+      website: this.state.website,
       pages: this.state.pages,
       description: this.state.description
     }
@@ -35,6 +37,7 @@ export default class EditBook extends Component {
       title: '',
       author: '',
       publisher: '',
+      website: '',
       pages: '',
       description: ''
     })
@@ -57,6 +60,10 @@ export default class EditBook extends Component {
 
           <label htmlFor="publisher">publisher
             <input name="publisher" type="text" className="form-control" onChange={this.onChange} value={this.state.publisher} required />
+          </label>
+
+          <label htmlFor="website">website
+            <input name="website" type="url" className="form-control" onChange={this.onChange} value={this.state.website} required />
           </label>
 
           <label htmlFor="pages">pages

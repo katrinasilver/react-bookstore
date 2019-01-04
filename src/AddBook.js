@@ -9,6 +9,7 @@ export default class AddBook extends Component {
       title: '',
       author: '',
       publisher: '',
+      website: '',
       pages: '',
       price: '',
       description: '',
@@ -34,6 +35,7 @@ export default class AddBook extends Component {
       id: +this.makeId(),
       title: this.state.title,
       author: this.state.author,
+      website: this.state.website,
       publisher: this.state.publisher,
       pages: this.state.pages,
       price: +this.state.price,
@@ -45,6 +47,7 @@ export default class AddBook extends Component {
       title: '',
       author: '',
       publisher: '',
+      website: '',
       pages: '',
       price: '',
       description: ''
@@ -70,6 +73,10 @@ export default class AddBook extends Component {
 
           <label htmlFor="publisher">publisher
             <input name="publisher" id="publisher" type="text" className="form-control" onChange={this.onChange} value={this.state.publisher} required />
+          </label>
+
+          <label htmlFor="website">website
+            <input name="website" id="website" type="url" className="form-control" onChange={this.onChange} value={this.state.website} required />
           </label>
 
           <label htmlFor="pages">pages
