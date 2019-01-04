@@ -87,8 +87,7 @@ export default class Booklist extends Component {
 
   removeBook = async (id) => {
     try {
-      const url = `http://localhost:8082/api/books/${id}`
-      const response = await axios.delete(url)
+      const response = await axios.delete(`${url}/${id}`)
       this.props.removeCart(response.data)
       this.getBooks()
     } catch (err) {
@@ -111,8 +110,7 @@ export default class Booklist extends Component {
 
   addCart = async (id) => {
     try {
-      const url = `http://localhost:8082/api/books/cart/add/${id}`
-      const response = await axios.patch(url)
+      const response = await axios.patch(`${url}/cart/add/${id}`)
       this.props.addCart(response.data)
       this.getBooks()
     } catch (err) {
@@ -122,8 +120,7 @@ export default class Booklist extends Component {
 
   removeCart = async (id) => {
     try {
-      const url = `http://localhost:8082/api/books/cart/remove/${id}`
-      const response = await axios.patch(url)
+      const response = await axios.patch(`${url}/cart/remove/${id}`)
       this.props.removeCart(response.data)
       this.getBooks()
     } catch (err) {
