@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdShoppingCart, MdRemoveShoppingCart, MdDelete, MdEdit } from 'react-icons/md'
 
-const Book = ({id, title, author, pages, description, price, publisher, addCart, removeCart, removeBook, editBook }) => {
+const Book = ({id, title, author, pages, description, price, publisher, addCart, removeCart, removeBook, editMode }) => {
   return (
     <li className="list-group-item" data-book={id}>
       <h3>{title}</h3>
@@ -10,7 +10,7 @@ const Book = ({id, title, author, pages, description, price, publisher, addCart,
         <p className="text-muted">{description}</p>
       <button onClick={addCart} className="btn btn-info"><MdShoppingCart /></button>&nbsp;
       <button onClick={removeCart} className="btn btn-outline-info"><MdRemoveShoppingCart /></button>&nbsp;
-      <button onClick={editBook} className="btn btn-outline-info"><MdEdit /></button>&nbsp;
+      <button onClick={editMode} className="btn btn-outline-info"><MdEdit /></button>&nbsp;
       <button onClick={removeBook} className="btn btn-outline-info"><MdDelete /></button>&nbsp;
     </li>
   )

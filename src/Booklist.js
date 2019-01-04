@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Book from './Book'
+import EditBook from './EditBook'
 import SortButton from './SortButton'
 import Search from './Search'
 import AddBook from './AddBook'
@@ -77,6 +78,26 @@ export default class Booklist extends Component {
     }
   }
 
+  editMode = (id) => {
+    let editing = this.state.books.filter(book => book.id === id)
+    this.setState({
+      books: [...editing],
+      editing: true
+    })
+  }
+
+  editBook = async (id, book) => {
+    try {
+      await axios.put(`${url}/${id}`, book)
+      this.setState({
+        editing: false
+      })
+      this.getBooks()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   onSearch = async (e) => {
     e.preventDefault()
     try {
@@ -108,8 +129,8 @@ export default class Booklist extends Component {
     try {
       const url = `http://localhost:8082/api/books/cart/remove/${id}`
       const response = await axios.patch(url)
-      this.getBooks()
       this.props.removeCart(response.data)
+      this.getBooks()
     } catch (err) {
       console.log(err)
     }
@@ -118,19 +139,24 @@ export default class Booklist extends Component {
   render() {
     return (
       <div className="mt-4 mb-4 row">
-        <Search onSearch={this.onSearch} onChange={this.onChange}/>
+        <Search onSearch={this.onSearch} onChange={this.onChange} />
         <span className="sort-widget text-right col-lg-4">
           Sort by:&nbsp;{this.state.keys.map(ele => <SortButton onClick={this.sortable} sortBy={ele} key={ele} />)}
         </span>
 
         <ul className="col-lg-8 mt-3 pl-0 list-group">
           {
-            this.state.books.map(book =>
+            this.state.books.map(book => this.state.editing ?
+              <EditBook
+                key={book.id} {...book}
+                editBook={this.editBook}
+              />
+            :
               <Book
-                key={book.id}
-                {...book}
+                key={book.id} {...book}
                 addCart={() => this.addCart(book.id)}
                 removeCart={() => this.removeCart(book.id)}
+                editMode={() => this.editMode(book.id)}
                 removeBook={() => this.removeBook(book.id)}
               />
             )
@@ -138,7 +164,7 @@ export default class Booklist extends Component {
         </ul>
 
         <div className="addBook col-lg-4 pr-0">
-          <AddBook addBook={this.addBook} bookLength={this.bookLength}/>
+          <AddBook addBook={this.addBook} bookLength={this.bookLength} />
         </div>
 
       </div>

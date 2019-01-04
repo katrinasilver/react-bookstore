@@ -27,7 +27,7 @@ export default class AddBook extends Component {
     })
   }
 
-  onSubmit = async (e) => {
+  onSubmit = (e) => {
     e.preventDefault()
 
     let book = {
@@ -55,7 +55,7 @@ export default class AddBook extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className="addBook" onSubmit={this.onSubmit}>
         <br />
         <h4>Add a Book</h4>
         <div className="form-group">
